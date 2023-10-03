@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GET FETCH</title>
+</head>
+<body>
+    <h1 id="full-name"></h1>
+    <script>
+        fetch('http://127.0.0.1:3000/api/name')
+            .then(response => response.text())
+            .then(result => document.querySelector('#full-name').innerHTML = result);
+    </script>
+</body>
+</html>
