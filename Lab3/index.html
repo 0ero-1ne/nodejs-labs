@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3</title>
+</head>
+<body>
+    <div id="root">
+        <div class="task-block">
+            <h2>Simple factorial</h2>
+            <div id="root-1"></div>
+        </div>
+        <div class="task-block">
+            <h2>Tick factorial</h2>
+            <div id="root-2"></div>
+        </div>
+        <div class="task-block">
+            <h2>Immediate factorial</h2>
+            <div id="root-3"></div>
+        </div>
+    </div>
+    <script>
+        const factRequest = async () => {
+            const date = Date.now();
+
+            for (let i = 0; i <= 20; i++) {
+                const response = await fetch(`http://127.0.0.1:5000/fact?k=${i}`);
+                const json = await response.json();
+                document.querySelector('#root-1').innerHTML += `${i}.Result: ${Date.now() - date}-${i}/${json.fact}<br/>`
+            }
+        }
+
+        const tickRequest = async () => {
+            const date = Date.now();
+
+            for (let i = 0; i <= 20; i++) {
+                const response = await fetch(`http://127.0.0.1:5000/tick-fact?k=${i}`);
+                const json = await response.json();
+                document.querySelector('#root-2').innerHTML += `${i}.Result: ${Date.now() - date}-${i}/${json.fact}<br/>`
+            }
+        }
+
+        const immediateRequest = async () => {
+            const date = Date.now();
+
+            for (let i = 0; i <= 20; i++) {
+                const response = await fetch(`http://127.0.0.1:5000/immediate-fact?k=${i}`);
+                const json = await response.json();
+                document.querySelector('#root-3').innerHTML += `${i}.Result: ${Date.now() - date}-${i}/${json.fact}<br/>`
+            }
+        }
+
+        setTimeout(() => {
+            factRequest();
+        }, 0);
+
+        setTimeout(() => {
+            tickRequest();
+        }, 3000);
+
+        setTimeout(() => {
+            immediateRequest();
+        }, 6000);
+    </script>
+</body>
+</html>
