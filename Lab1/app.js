@@ -20,7 +20,7 @@ const server = http.createServer((req, res) => {
             URI: ${req.headers.host}${req.url}<br /> 
             HTTP version: ${req.httpVersion}<br />
             Headers: <pre>${headers}</pre><br />
-            ${body === '' ? 'Body is empty' : 'Body: <br />' + body}<br />
+            ${body.length === 0 ? 'Body is empty' : 'Body: <br />' + body}<br />
             <h1>Hello, World!</h1>
         `;
         res.end(result);
