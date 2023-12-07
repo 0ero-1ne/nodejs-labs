@@ -2,8 +2,8 @@ const http = require('http'),
       url = require('url'),
       fs = require('fs');
 
-const hostname = '127.0.0.1';
-const port = 5000;
+const hostname = 'localhost';
+const port = 3000;
 process.stdin.setEncoding('utf-8');
 
 let status = 'norm';
@@ -60,6 +60,10 @@ const server = http.createServer((req, res) => {
         const page = url.parse(req.url, true);
         const k = +page.query.k;
         switch (page.pathname) {
+            case '/':
+                res.setHeader('Content-Type', 'text/html');
+                res.end(`<h1>Status code: ${status}</h1>`);
+                break;
             case '/fact':
                 if (!Number.isInteger(k))
                     throw new Error('k argument must be integer');
