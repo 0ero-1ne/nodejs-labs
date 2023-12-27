@@ -21,33 +21,33 @@
         </div>
     </div>
     <script>
-        const factRequest = () => {
+        const factRequest = async () => {
             const date = Date.now();
 
             for (let i = 0; i <= 20; i++) {
-                fetch(`http://localhost:3000/fact?k=${i}`)
-                    .then(response => response.json())
-                    .then(json => document.querySelector('#root-1').innerHTML += `${i}.Result: ${Date.now() - date}-${i}/${json.fact}<br/>`)
+                let result = await fetch(`http://localhost:3000/fact?k=${i}`)
+                let json = await result.json();
+                document.querySelector('#root-1').innerHTML += `${i}.Result: ${Date.now() - date}-${i}/${json.fact}<br/>`;
             }
         }
 
-        const tickRequest = () => {
+        const tickRequest = async () => {
             const date = Date.now();
 
             for (let i = 0; i <= 20; i++) {
-                fetch(`http://localhost:3000/tick-fact?k=${i}`)
-                    .then(response => response.json())
-                    .then(json => document.querySelector('#root-2').innerHTML += `${i}.Result: ${Date.now() - date}-${i}/${json.fact}<br/>`);
+                let result = await fetch(`http://localhost:3000/tick-fact?k=${i}`)
+                let json = await result.json();
+                document.querySelector('#root-2').innerHTML += `${i}.Result: ${Date.now() - date}-${i}/${json.fact}<br/>`;
             }
         }
 
-        const immediateRequest = () => {
+        const immediateRequest = async () => {
             const date = Date.now();
 
             for (let i = 0; i <= 20; i++) {
-                fetch(`http://localhost:3000/immediate-fact?k=${i}`)
-                    .then(response => response.json())
-                    .then(json => document.querySelector('#root-3').innerHTML += `${i}.Result: ${Date.now() - date}-${i}/${json.fact}<br/>`);
+                let result = await fetch(`http://localhost:3000/immediate-fact?k=${i}`);
+                let json = await result.json();
+                document.querySelector('#root-3').innerHTML += `${i}.Result: ${Date.now() - date}-${i}/${json.fact}<br/>`;
             }
         }
 

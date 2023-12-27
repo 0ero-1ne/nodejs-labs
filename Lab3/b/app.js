@@ -72,7 +72,7 @@ function thirdJob(data) {
 }
 
 // try {
-//     thirdJob('h')
+//     thirdJob(1)
 //         .then(resolve => console.log(resolve))
 //         .catch(reject => console.log(reject));
 // } catch (error) {
@@ -212,4 +212,4 @@ function main() {
     f2();
 }
 
-//main();
+main();

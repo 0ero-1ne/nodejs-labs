@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab4 - 4b part</title>
+    <style>
+        fieldset {
+            width: 400px;
+            margin: 100px auto;
+            display: block;
+        }
+
+        legend {
+            font-size: 24px;
+        }
+
+        label {
+            font-size: 20px;
+        }
+
+        input {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        select {
+            display: block;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend>Заполните форму</legend>
+        <form action="index.html">
+            <label for="input_id">id</label>
+            <input type="text" name="id" id="input_id">
+            <label for="input_name">Имя</label>
+            <input type="text" name="name" id="input_name">
+            <label for="input_birthdate">День рождения</label>
+            <input type="date" name="birthdate" id="input_birthdate">
+            <label for="input_method">Метод</label>
+            <select name="methods" id="input_method">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+            </select>
+            <input type="submit" name="submit" id="submit" value="Отправить запрос">
+        </form>
+    </fieldset>
+    <pre id="result">
+    </pre>
+
+    <script>
+        document.querySelector("#submit").addEventListener("click", async (event) => {
+            event.preventDefault();
+            let method = document.querySelector("#input_method").value;
+            let name = document.querySelector("#input_name");
+            let birthdate = document.querySelector("#input_birthdate");
+            let id = document.querySelector("#input_id");
+            console.log(method);
+
+            switch (method)
+            {
+                case "GET":
+                    let response_one = await fetch("http://localhost:5000/api/db");
+                    if (response_one.ok)
+                    {
+                        let text = await response_one.text();
+                        document.querySelector("#result").innerHTML = text;
+                    }
+                    break;
+                case "POST":
+                    if (name.value === "")
+                    {
+                        alert('Заполните поле "Имя"');
+                        return;
+                    }
+
+                    if (birthdate === null)
+                    {
+                        alert('Заполните поле "День рождения"');
+                        return;
+                    }
+
+                    let response_two = await fetch("http://localhost:5000/api/db", {
+                        method: "POST",
+                        body: `{
+                            "name": "${name.value.toString()}",
+                            "birthdate": "${birthdate.value.toString()}"
+                        }`
+                    });
+
+                    if (response_two.ok)
+                    {
+                        let text = await response_two.text();
+                        document.querySelector("#result").innerHTML = text;
+                    }
+                    break;
+                case "PUT":
+                    if (id.value === "")
+                    {
+                        alert('Заполните поле "Id"');
+                        return;
+                    }
+
+                    if (name.value === "")
+                    {
+                        alert('Заполните поле "Имя"');
+                        return;
+                    }
+
+                    if (birthdate === null)
+                    {
+                        alert('Заполните поле "День рождения"');
+                        return;
+                    }
+
+                    let response_three = await fetch("http://localhost:5000/api/db", {
+                        method: "PUT",
+                        body: `{
+                            "id": "${id.value.toString()}",
+                            "name": "${name.value.toString()}",
+                            "birthdate": "${birthdate.value.toString()}"
+                        }`
+                    });
+
+                    if (response_three.ok)
+                    {
+                        let text = await response_three.text();
+                        document.querySelector("#result").innerHTML = text;
+                    }
+                    break;
+                case "DELETE":
+                    if (id.value === "")
+                    {
+                        alert('Заполните поле "Id"');
+                        return;
+                    }
+
+                    let response_four = await fetch(`http://localhost:5000/api/db?id=${id.value}`, {
+                        method: "DELETE"
+                    });
+
+                    if (response_four.ok)
+                    {
+                        let text = await response_four.text();
+                        document.querySelector("#result").innerHTML = text;
+                    }
+
+                    break;
+                default:
+                    console.log("Wrong method");
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
