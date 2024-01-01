@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab5 - Mailer</title>
+    <style>
+        fieldset {
+            width: 400px;
+            margin: 100px auto;
+            display: block;
+        }
+
+        legend {
+            font-size: 24px;
+        }
+
+        label {
+            font-size: 20px;
+        }
+
+        input {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend>Заполните форму</legend>
+        <form action="index.html">
+            <label for="input_from">FROM</label>
+            <input type="text" name="from" id="input_from">
+            <label for="input_to">TO</label>
+            <input type="text" name="to" id="input_to">
+            <label for="input_text">TEXT</label><br />
+            <textarea type="text" name="text" id="input_text"></textarea><br />
+            <input type="submit" name="submit" id="submit" value="Отправить запрос">
+        </form>
+    </fieldset>
+
+    <script>
+        document.querySelector("#submit").addEventListener("click", async (event) => {
+            event.preventDefault();
+            let from = document.querySelector("#input_from");
+            let to = document.querySelector("#input_to");
+            let text = document.querySelector("#input_text");
+            let bodyText = `{
+                "from": "${from.value.toString()}",
+                "to": "${to.value.toString()}",
+                "text": "${text.value.toString()}"
+            }`;
+            console.log(bodyText);
+
+            fetch("http://localhost:5000/send", {
+                method: "POST",
+                body: bodyText
+            });
+        });
+    </script>
+</body>
+</html>

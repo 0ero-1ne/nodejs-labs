@@ -1,0 +1,16 @@
+{
+  "name": "check_package",
+  "version": "1.0.0",
+  "description": "lab5 check package",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "author": "Volikov Dmitry",
+  "license": "ISC",
+  "dependencies": {
+    "@gonjy_monjy/m06_vda": "^1.0.0",
+    "nodemon": "^3.0.2"
+  }
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+</head>
+
+<body>
+    <h1>Chat</h1>
+    <div id="content" style="
+        background-color: rgb(255, 251, 247);
+        width: 400px;
+         height: fit-content;
+         border-width: 1px;
+         border-radius: 4px;
+         border-color: rgb(138, 138, 138);
+         border-style: solid;
+         margin-bottom: 10px;
+         "></div>
+    <form>
+        <input type="text" placeholder="Type your name" name="name" id="name" />
+        <input type="text" placeholder="Type your message" name="mes" id="mes" />
+        <button type="button" id="send" onclick="Send()">Send</button>
+    </form>
+    <button onclick="Disconnect()" style="display: block; margin-top: 20px;">Disconnect from chat</button>
+    <script>
+        const ws = new WebSocket('ws://localhost:4000/wsserver');
+        ws.onmessage = async (message) => {
+            let text = await message.data.text().then(e => { return e });
+            content.innerHTML += `<p>${text}</p>`;
+        }
+        function Send() {
+
+            let content = document.querySelector("#content");
+
+            const username = document.querySelector('#name').value;
+            const message = document.querySelector("#mes").value;
+
+            const data = `<b>${username}</b>: ${message}`;
+
+            ws.send(JSON.stringify(data));
+
+            ws.onclose = (e) => {
+
+            };
+        }
+
+        function Disconnect() {
+            const username = document.querySelector('#name').value;
+            document.querySelector('#name').disabled = true;
+            document.querySelector('#mes').disabled = true;
+            document.querySelector("#send").disabled = true;
+
+            const data = `${username}: left chat`;
+
+            ws.send(JSON.stringify(data));
+            ws.close();
+        }
+    </script>
+</body>
+
+</html>
